@@ -17,7 +17,7 @@ typedef struct{
     int bookedCount;
 }Doctor;
 
-Doctor *docList = Null;
+Doctor *docList = NULL;
 int docCount = 0;
 
 void addDoctor(int id,const char *name,const char*field,int slots){
@@ -47,8 +47,9 @@ void listDoctors(){
 
 Doctor* findDoctor(int id) {
     for(int i=0;i<docCount;i++)
-        if(docList[i].id==id) return &docList[i];
-        return NULL;
+        if(docList[i].id==id) 
+            return &docList[i];
+    return NULL;
 }
 
 void bookSlot(){
@@ -139,9 +140,9 @@ int pqSize = 0;
 
 void swapWalkin(Walkin *a,Walkin *b)
 {
-    Walkin temp;
-*a=*b;
-*b=temp;
+    Walkin temp = *a;
+    *a=*b;
+    *b=temp;
 }
 
 void pushWalkin(const char *name,const char *sym,int pr)
@@ -207,13 +208,12 @@ printf("NAme:%s|ID:%d\n",top.name,top.id);
 printf("Wait Time : %0f sec\n",wait);
 }
 int totalBooked =0;
-int totalCnacelled=0;
+int totalCancelled=0;
 int walkinServed =0;
 double accumulatedWait=0;
 
 void recordBooked(){totalBooked++;}
-void recordCancelled(
-{totalCancelled++;}
+void recordCancelled(){totalCancelled++;}
 
 void printReport(){
     printf("\n==========DAILY REPORT==========\n");
@@ -221,8 +221,8 @@ for(int i=0;i<docCount;i++)
 {
 Doctor*d=&docList[i];
 printf("\nDoctor;%s\n",d->name);
-printf("Total slots: %dd\n", d->capacity);
-printf("Book: %d | Free": %d\n", d->bookedCount,d-capacity-d->bookedCount);
+printf("Total slots: %d\n", d->capacity);
+printf("Book: %d | Free: %d\n", d->bookedCount, d->capacity - d->bookedCount);
 }
 printf("\n----Walked-in Queue----\n");
 if(pqSize==0)
@@ -243,7 +243,7 @@ addDoctor(3,"Dr.Abhinav","General Medicine",6);
 int op;
 do{
 printf("\n======CLINIC CONTROL SYSYTEM=======\n");
-    printf("1.Book Appointment\n");
+
  printf("1.Book Appointment\n");
  printf("2.Cancelled Appointment\n");
  printf("3.Register walk-in\n");
@@ -262,15 +262,17 @@ else if(op==3){
 char n[64],s[120];
 int p;
 printf("Name:");
-fgets(n,64,stdin);n[strcspn(n,"\n)]=0;
+fgets(n,64,stdin);n[strcspn(n,"\n")]=0;
 printf("Symptoms:");
-fgets(s,120,stdin);s[strcspn(s,"\n)]=0;
+fgets(s,120,stdin);s[strcspn(s,"\n")]=0;
 printf("priorty(1=High,2=Medium,3=Low):");
+printf("priority (1=High,2=Medium,3=Low): ");
+scanf("%d",&p); getchar();
 pushWalkin(n,s,p);
 }
-else if(op==4) serveWalkIn();
+else if(op==4) serveWalkin();
 else if(op==5) listDoctors();
-else if(op==6)printfReport();
+else if(op==6) printReport();
 }
 while(op!=0);
 return 0;
