@@ -206,6 +206,25 @@ printf("\n--NOW SERVING WALK-IN--\n");
 printf("NAme:%s|ID:%d\n",top.name,top.id);
 printf("Wait Time : %0f sec\n",wait);
 }
+int totalBooked =0;
+int totalCnacelled=0;
+int walkinServed =0;
+double accumulatedWait=0;
+
+void recordBooked(){totalBooked++;}
+void recordCancelled(
+{totalCancelled++;}
+
+void printReport(){
+    printf("\n==========DAILY REPORT==========\n");
+for(int i=0;i<docCount;i++)
+{
+Doctor*d=&docList[i];
+printf("\nDoctor;%s\n",d->name);
+printf("Total slots: %dd\n", d->capacity);
+printf("Book: %d | Free": %d\n", d->bookedCount,d-capacity-d->bookedCount);
+}
+
 
 
 
